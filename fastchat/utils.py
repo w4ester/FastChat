@@ -17,6 +17,7 @@ import warnings
 import requests
 
 from fastchat.constants import LOGDIR
+from security import safe_requests
 
 
 handler = None
@@ -393,13 +394,12 @@ def str_to_torch_dtype(dtype: str):
 
 def load_image(image_file):
     from PIL import Image
-    import requests
 
     image = None
 
     if image_file.startswith("http://") or image_file.startswith("https://"):
         timeout = int(os.getenv("REQUEST_TIMEOUT", "3"))
-        response = requests.get(image_file, timeout=timeout)
+        response = safe_requests.get(image_file, timeout=timeout)
         image = Image.open(BytesIO(response.content))
     elif image_file.lower().endswith(("png", "jpg", "jpeg", "webp", "gif")):
         image = Image.open(image_file)

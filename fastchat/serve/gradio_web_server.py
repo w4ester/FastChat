@@ -44,6 +44,7 @@ from fastchat.utils import (
     parse_gradio_auth_creds,
     load_image,
 )
+from security import safe_requests
 
 logger = build_logger("gradio_web_server", "gradio_web_server.log")
 
@@ -431,7 +432,7 @@ def model_worker_stream_iter(
 def is_limit_reached(model_name, ip):
     monitor_url = "http://localhost:9090"
     try:
-        ret = requests.get(
+        ret = safe_requests.get(
             f"{monitor_url}/is_limit_reached?model={model_name}&user_id={ip}", timeout=1
         )
         obj = ret.json()
