@@ -4,7 +4,6 @@ python3 summarize_cluster.py --in results_c20_kmeans_cluster.pkl --model gpt-4 -
 python3 summarize_cluster.py --in results_c20_kmeans_cluster.pkl --model azure-gpt-4-32k --num-prompts 200
 """
 import argparse
-import pickle
 
 import pandas as pd
 
@@ -14,6 +13,7 @@ from fastchat.llm_judge.common import (
     chat_completion_anthropic,
 )
 from fastchat.conversation import get_conv_template
+import fickling
 
 
 def truncate_string(s, l):
@@ -30,7 +30,7 @@ if __name__ == "__main__":
 
     model = args.model
 
-    cluster_infos = pickle.load(open(args.input_file, "rb"))
+    cluster_infos = fickling.load(open(args.input_file, "rb"))
     num_total_prompts = sum([x[0] for x in cluster_infos])
 
     topics = []
