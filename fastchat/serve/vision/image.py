@@ -28,7 +28,7 @@ class Image(BaseModel):
 
         # Load image if it has not been loaded in yet
         if self.image_format == ImageFormat.URL:
-            response = requests.get(image)
+            response = requests.get(image, timeout=60)
             image = Image.open(BytesIO(response.content)).convert("RGBA")
             image_bytes = BytesIO()
             image.save(image_bytes, format="PNG")

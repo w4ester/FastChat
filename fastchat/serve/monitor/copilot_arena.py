@@ -35,7 +35,7 @@ def process_copilot_arena_leaderboard(leaderboard):
 
 
 def build_copilot_arena_tab():
-    response = requests.get(copilot_arena_leaderboard_url)
+    response = requests.get(copilot_arena_leaderboard_url, timeout=60)
     if response.status_code == 200:
         leaderboard = pd.DataFrame(response.json()["elo_data"])
         leaderboard = process_copilot_arena_leaderboard(leaderboard)

@@ -210,14 +210,14 @@ def get_model_list(controller_url, register_api_endpoint_file, vision_arena):
 
     # Add models from the controller
     if controller_url:
-        ret = requests.post(controller_url + "/refresh_all_workers")
+        ret = requests.post(controller_url + "/refresh_all_workers", timeout=60)
         assert ret.status_code == 200
 
         if vision_arena:
-            ret = requests.post(controller_url + "/list_multimodal_models")
+            ret = requests.post(controller_url + "/list_multimodal_models", timeout=60)
             models = ret.json()["models"]
         else:
-            ret = requests.post(controller_url + "/list_language_models")
+            ret = requests.post(controller_url + "/list_language_models", timeout=60)
             models = ret.json()["models"]
     else:
         models = []
@@ -481,8 +481,8 @@ def bot_response(
     if model_api_dict is None:
         # Query worker address
         ret = requests.post(
-            controller_url + "/get_worker_address", json={"model": model_name}
-        )
+            controller_url + "/get_worker_address", json={"model": model_name}, 
+        timeout=60)
         worker_addr = ret.json()["address"]
         logger.info(f"model_name: {model_name}, worker_addr: {worker_addr}")
 

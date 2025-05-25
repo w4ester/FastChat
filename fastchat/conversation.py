@@ -478,7 +478,7 @@ class Conversation:
                     text, images = msg[0], msg[1]
                     for image in images:
                         if image.image_format == ImageFormat.URL:
-                            response = requests.get(image.url)
+                            response = requests.get(image.url, timeout=60)
                             image = response.content
                         elif image.image_format == ImageFormat.BYTES:  # base64
                             image = base64.b64decode(image.base64_str)

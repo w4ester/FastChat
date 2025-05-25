@@ -446,7 +446,7 @@ def image_moderation_request(image_bytes, endpoint, api_key):
 
     MAX_RETRIES = 3
     for _ in range(MAX_RETRIES):
-        response = requests.post(endpoint, headers=headers, data=image_bytes).json()
+        response = requests.post(endpoint, headers=headers, data=image_bytes, timeout=60).json()
         try:
             if response["Status"]["Code"] == 3000:
                 break

@@ -54,6 +54,6 @@ class RemoteLogger:
                     data[key] = json.dumps(value, ensure_ascii=False)
 
             try:
-                requests.post(self.url, json=data)
+                requests.post(self.url, json=data, timeout=60)
             except Exception:
                 logging.exception("Failed to send logs to remote endpoint")

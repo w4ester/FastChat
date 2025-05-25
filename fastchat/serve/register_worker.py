@@ -24,5 +24,5 @@ if __name__ == "__main__":
         "worker_status": None,
         "multimodal": args.multimodal,
     }
-    r = requests.post(url, json=data)
+    r = requests.post(url, json=data, timeout=60)
     assert r.status_code == 200
