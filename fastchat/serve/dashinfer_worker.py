@@ -305,7 +305,7 @@ if __name__ == "__main__":
 
     cmd = f"pip show dashinfer | grep 'Location' | cut -d ' ' -f 2"
     package_location = subprocess.run(
-        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=True, text=True
+        cmd, stdout=subprocess.PIPE, stderr=subprocess.PIPE, shell=False, text=True
     )
     package_location = package_location.stdout.strip()
     os.environ["AS_DAEMON_PATH"] = package_location + "/dashinfer/allspark/bin"

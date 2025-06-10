@@ -20,5 +20,5 @@ else:
     serve = f".{args.down}"
     shell_script = base_shell.format(serve)
 print(f"execute shell cmd: {shell_script}")
-subprocess.run(shell_script, shell=True, check=True)
+subprocess.run(shell_script, shell=False, check=True)
 print(f"{args.down} has been shutdown!")
