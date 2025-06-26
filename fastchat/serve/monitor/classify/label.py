@@ -6,11 +6,11 @@ import time
 import concurrent.futures
 import tqdm
 import yaml
-import random
 import threading
 import orjson
 
 from category import Category
+import secrets
 
 
 LOCK = threading.RLock()
@@ -38,7 +38,7 @@ def get_endpoint(endpoint_list):
         return None
     assert endpoint_list is not None
     # randomly pick one
-    api_dict = random.choices(endpoint_list)[0]
+    api_dict = secrets.SystemRandom().choices(endpoint_list)[0]
     return api_dict
 
 

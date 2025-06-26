@@ -3,7 +3,6 @@ import gc
 
 import os
 import time
-import random
 from typing import Dict, Optional, Sequence, List, Tuple
 from transformers.cache_utils import Cache, DynamicCache
 from transformers import (
@@ -16,6 +15,7 @@ from transformers import (
 )
 from transformers.modeling_attn_mask_utils import _prepare_4d_causal_attention_mask
 import torch.nn.functional as F
+import secrets
 
 
 def get_jacobian_trajectory(
@@ -32,7 +32,7 @@ def get_jacobian_trajectory(
     )
     for i in range(bsz):
         tokens[i, :] = torch.tensor(
-            random.choices(input_ids[i][attention_mask[i] == 1], k=total_len),
+            secrets.SystemRandom().choices(input_ids[i][attention_mask[i] == 1], k=total_len),
             dtype=torch.long,
             device=model.device,
         )

@@ -7,7 +7,7 @@ python3 -input in.json --number 1000
 
 import argparse
 import json
-import random
+import secrets
 
 K = 1000
 
@@ -18,8 +18,8 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     convs = json.load(open(args.input))
-    random.seed(0)
-    random.shuffle(convs)
+    secrets.SystemRandom().seed(0)
+    secrets.SystemRandom().shuffle(convs)
 
     for number in args.number:
         new_convs = convs[:number]

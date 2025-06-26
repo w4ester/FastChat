@@ -13,10 +13,10 @@ from collections import defaultdict
 from enum import Enum, auto
 import json
 import os
-import random
 
 from tqdm import tqdm
 import opencc
+import secrets
 
 BLOCKED_WORDS_FILENAME = "blocked_words.json"
 blocked_words = []
@@ -132,8 +132,8 @@ if __name__ == "__main__":
             new_convs.append(conv)
 
     if args.sample:
-        random.seed(42)
-        random.shuffle(new_convs)
+        secrets.SystemRandom().seed(42)
+        secrets.SystemRandom().shuffle(new_convs)
         new_convs = new_convs[: args.sample]
 
     print(f"ct_anonymized: {ct_anonymized}, ct_redacted: {ct_redacted}")

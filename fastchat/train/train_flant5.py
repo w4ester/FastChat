@@ -17,7 +17,6 @@ from collections import defaultdict
 import copy
 import os
 from dataclasses import dataclass, field
-import random
 import json
 import logging
 import pathlib
@@ -31,6 +30,7 @@ from torch.utils.data import Dataset
 from transformers import Trainer, AddedToken
 
 from fastchat.model.model_adapter import get_conversation_template
+import secrets
 
 default_conversation = get_conversation_template("t5")
 
@@ -314,7 +314,7 @@ class SupervisedDataset(Dataset):
 
         # Shuffle data to see more conversations, if only train on partial data
         temp = list(zip(data_dict["input_ids"], data_dict["labels"]))
-        random.shuffle(temp)
+        secrets.SystemRandom().shuffle(temp)
         res1, res2 = zip(*temp)
         data_dict["input_ids"], data_dict["labels"] = list(res1), list(res2)
 

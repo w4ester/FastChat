@@ -4,7 +4,7 @@ python3 -m fastchat.data.inspect_data --in sharegpt_20230322_clean_lang_split.js
 """
 import argparse
 import json
-import random
+import secrets
 
 
 if __name__ == "__main__":
@@ -17,7 +17,7 @@ if __name__ == "__main__":
     content = json.load(open(args.in_file, "r"))
 
     if args.random_n:
-        indices = [random.randint(0, len(content) - 1) for _ in range(args.random_n)]
+        indices = [secrets.SystemRandom().randint(0, len(content) - 1) for _ in range(args.random_n)]
     elif args.begin:
         indices = range(args.begin, len(content))
     else:

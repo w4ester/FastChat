@@ -6,7 +6,6 @@ python3 gen_model_answer.py --model-path lmsys/fastchat-t5-3b-v1.0 --model-id fa
 import argparse
 import json
 import os
-import random
 import time
 
 import shortuuid
@@ -16,6 +15,7 @@ from tqdm import tqdm
 from fastchat.llm_judge.common import load_questions, temperature_config
 from fastchat.model import load_model, get_conversation_template
 from fastchat.utils import str_to_torch_dtype
+import secrets
 
 
 def run_eval(
@@ -35,7 +35,7 @@ def run_eval(
 ):
     questions = load_questions(question_file, question_begin, question_end)
     # random shuffle the questions to balance the loading
-    random.shuffle(questions)
+    secrets.SystemRandom().shuffle(questions)
 
     # Split the question file into `num_gpus` files
     assert num_gpus_total % num_gpus_per_model == 0
