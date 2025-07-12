@@ -10,6 +10,7 @@ Note that a few of non-critical `fastchat.serve` cmd options are not supported c
 """
 import sys
 import os
+from security import safe_command
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
@@ -249,8 +250,8 @@ def launch_worker(item):
         "model_worker", worker_str_args, LOGDIR, f"worker_{log_name}"
     )
     worker_check_sh = base_check_sh.format(LOGDIR, f"worker_{log_name}", "model_worker")
-    subprocess.run(worker_sh, shell=True, check=True)
-    subprocess.run(worker_check_sh, shell=True, check=True)
+    safe_command.run(subprocess.run, worker_sh, shell=True, check=True)
+    safe_command.run(subprocess.run, worker_check_sh, shell=True, check=True)
 
 
 def launch_all():
@@ -259,8 +260,8 @@ def launch_all():
         "controller", controller_str_args, LOGDIR, "controller"
     )
     controller_check_sh = base_check_sh.format(LOGDIR, "controller", "controller")
-    subprocess.run(controller_sh, shell=True, check=True)
-    subprocess.run(controller_check_sh, shell=True, check=True)
+    safe_command.run(subprocess.run, controller_sh, shell=True, check=True)
+    safe_command.run(subprocess.run, controller_check_sh, shell=True, check=True)
 
     if isinstance(args.model_path_address, str):
         launch_worker(args.model_path_address)
@@ -276,8 +277,8 @@ def launch_all():
     server_check_sh = base_check_sh.format(
         LOGDIR, "openai_api_server", "openai_api_server"
     )
-    subprocess.run(server_sh, shell=True, check=True)
-    subprocess.run(server_check_sh, shell=True, check=True)
+    safe_command.run(subprocess.run, server_sh, shell=True, check=True)
+    safe_command.run(subprocess.run, server_check_sh, shell=True, check=True)
 
 
 if __name__ == "__main__":
