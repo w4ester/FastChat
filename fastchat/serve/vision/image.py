@@ -3,6 +3,7 @@ from enum import auto, IntEnum
 from io import BytesIO
 
 from pydantic import BaseModel
+from security import safe_requests
 
 
 class ImageFormat(IntEnum):
@@ -24,11 +25,10 @@ class Image(BaseModel):
     def convert_image_to_base64(self):
         """Given an image, return the base64 encoded image string."""
         from PIL import Image
-        import requests
 
         # Load image if it has not been loaded in yet
         if self.image_format == ImageFormat.URL:
-            response = requests.get(image)
+            response = safe_requests.get(image)
             image = Image.open(BytesIO(response.content)).convert("RGBA")
             image_bytes = BytesIO()
             image.save(image_bytes, format="PNG")

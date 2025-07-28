@@ -11,6 +11,7 @@ from enum import auto, IntEnum
 from io import BytesIO
 import os
 from typing import List, Any, Dict, Union, Tuple
+from security import safe_requests
 
 
 class SeparatorStyle(IntEnum):
@@ -464,7 +465,6 @@ class Conversation:
     def to_vertex_api_messages(self):
         from vertexai.preview.generative_models import Image
         import base64
-        import requests
         from fastchat.serve.vision.image import ImageFormat
 
         if self.system_message == "":
@@ -478,7 +478,7 @@ class Conversation:
                     text, images = msg[0], msg[1]
                     for image in images:
                         if image.image_format == ImageFormat.URL:
-                            response = requests.get(image.url)
+                            response = safe_requests.get(image.url)
                             image = response.content
                         elif image.image_format == ImageFormat.BYTES:  # base64
                             image = base64.b64decode(image.base64_str)

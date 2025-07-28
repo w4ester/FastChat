@@ -1,9 +1,9 @@
 import gradio as gr
 import pandas as pd
-import requests
 import os
 
 from fastchat.serve.monitor.monitor import recompute_final_ranking
+from security import safe_requests
 
 copilot_arena_leaderboard_url = os.getenv("COPILOT_ARENA_LEADERBOARD_URL")
 
@@ -35,7 +35,7 @@ def process_copilot_arena_leaderboard(leaderboard):
 
 
 def build_copilot_arena_tab():
-    response = requests.get(copilot_arena_leaderboard_url)
+    response = safe_requests.get(copilot_arena_leaderboard_url)
     if response.status_code == 200:
         leaderboard = pd.DataFrame(response.json()["elo_data"])
         leaderboard = process_copilot_arena_leaderboard(leaderboard)
