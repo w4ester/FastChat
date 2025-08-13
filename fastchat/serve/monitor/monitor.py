@@ -9,7 +9,6 @@ pip install pytz gradio gdown plotly polyglot pyicu pycld2 tabulate
 import argparse
 import ast
 import json
-import pickle
 import os
 import threading
 import time
@@ -38,6 +37,7 @@ from fastchat.serve.monitor.monitor_md import (
     make_full_leaderboard_md,
     make_leaderboard_md_live,
 )
+import fickling
 
 k2c = {}
 for k, v in key_to_category_name.items():
@@ -926,7 +926,7 @@ def build_leaderboard_tab(
         p1 = p2 = p3 = p4 = None
     else:
         with open(elo_results_file, "rb") as fin:
-            elo_results = pickle.load(fin)
+            elo_results = fickling.load(fin)
         if "text" in elo_results:
             elo_results_text = elo_results["text"]
             elo_results_vision = elo_results["vision"]
